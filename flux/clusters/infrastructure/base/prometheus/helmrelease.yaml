@@ -29,6 +29,7 @@ spec:
       persistence:
         enabled: true
         size: 10Gi
+        storageClassName: longhorn
         accessModes:
           - ReadWriteOnce
       defaultDashboardsTimezone: browser
@@ -42,6 +43,7 @@ spec:
         storageSpec:
           volumeClaimTemplate:
             spec:
+              storageClassName: longhorn
               accessModes: ["ReadWriteOnce"]
               resources:
                 requests:
@@ -59,6 +61,7 @@ spec:
         storage:
           volumeClaimTemplate:
             spec:
+              storageClassName: longhorn
               accessModes: ["ReadWriteOnce"]
               resources:
                 requests:
