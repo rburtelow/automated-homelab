@@ -1,0 +1,14 @@
+# This file is a reference for labeling worker nodes with the node.longhorn.io/create-default-disk label
+# which enables Longhorn to automatically create disks on worker nodes
+# when createDefaultDiskLabeledNodes is set to true
+#
+# Note: Control plane nodes are excluded from Longhorn storage to avoid scheduling
+# storage workloads on critical control plane nodes.
+#
+# To label worker nodes manually, run:
+#   kubectl label nodes -l '!node-role.kubernetes.io/control-plane' node.longhorn.io/create-default-disk=true
+#
+# Or use the label-nodes.sh script which automatically identifies and labels worker nodes.
+#
+# Important: After labeling, Longhorn will automatically create disks on these nodes.
+# You may need to wait a few minutes for Longhorn to detect the labels and create the disks.

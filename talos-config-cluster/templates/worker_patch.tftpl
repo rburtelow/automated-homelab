@@ -1,0 +1,25 @@
+machine:
+  kubelet:
+    extraMounts:
+      - destination: /var/lib/longhorn
+        type: bind
+        source: /var/lib/longhorn
+        options:
+          - bind
+          - rshared
+          - rw
+    nodeLabels:
+      node.longhorn.io/create-default-disk: "true"
+  install:
+    disk: ${install_disk}
+    image: ${talos_install_image}:${talos_version}
+  network:
+    hostname: ${hostname}
+    interfaces:
+      - deviceSelector:
+          physical: true
+        addresses:
+          - ${ip_address}
+        routes:
+          - network: 0.0.0.0/0
+            gateway: ${network_gateway}

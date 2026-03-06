@@ -1,0 +1,18 @@
+machine:
+  install:
+    disk: ${install_disk}
+    image: ${talos_install_image}:${talos_version}
+  network:
+    hostname: ${hostname}
+    interfaces:
+      - deviceSelector:
+          physical: true
+        addresses:
+          - ${ip_address}
+        routes:
+          - network: 0.0.0.0/0
+            gateway: ${network_gateway}
+        vip:
+          ip: ${vip_shared_ip}
+cluster:
+  allowSchedulingOnControlPlanes: false

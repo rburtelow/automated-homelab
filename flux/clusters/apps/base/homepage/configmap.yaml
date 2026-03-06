@@ -1,0 +1,134 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homepage
+  namespace: homepage
+  labels:
+    app.kubernetes.io/name: homepage
+data:
+  kubernetes.yaml: |
+    mode: cluster
+  settings.yaml: |
+    theme: dark
+    color: slate
+    useEqualHeights: true
+    datetime:
+      text_size: xl
+      format:
+        timeStyle: short
+    providers:
+      longhorn:
+        url: http://longhorn-frontend.longhorn-system.svc.cluster.local
+  custom.css: ""
+  custom.js: ""
+  bookmarks.yaml: |
+    - Developer:
+        - Github:
+            - abbr: GH
+              href: https://github.com/
+  services.yaml: |
+    - Infrastructure:
+        - Proxmox:
+            href: https://pvelab.drongo-bangus.ts.net:8006
+            description: Proxmox is a virtualization platform
+            icon: proxmox.png
+            widget:
+              type: proxmox
+              url: https://192.168.100.10:8006
+              username: {{HOMEPAGE_VAR_PROXMOX_TOKEN_ID}}
+              password: {{HOMEPAGE_VAR_PROXMOX_TOKEN_SECRET}}
+        - Longhorn:
+            href: https://longhorn-ui-1.drongo-bangus.ts.net
+            description: Longhorn is a container storage platform
+            icon: longhorn.png
+        - Nextcloud:
+            href: https://nextcloud.drongo-bangus.ts.net
+            description: Nextcloud is a file sharing and collaboration platform
+            icon: nextcloud.png   
+            widget:
+              type: nextcloud
+              url: https://192.168.100.97
+              #username: {{HOMEPAGE_VAR_NEXTCLOUD_USERNAME}}
+              #password: {{HOMEPAGE_VAR_NEXTCLOUD_PASSWORD}}
+  
+    - Security:
+    
+        - Authentik:
+            href: https://authentik-1.drongo-bangus.ts.net/
+            description: Single Sign-On for the cluster
+            icon: authentik.png
+            widget:
+              type: authentik
+              url: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
+              key: {{HOMEPAGE_VAR_AUTHENTIK_API_KEY}}
+        - Tailscale:
+            href: https://login.tailscale.com/admin/machines
+            description: Tailscale is a VPN for the cluster
+            icon: tailscale.png
+            widget:
+              type: tailscale
+              deviceid: {{HOMEPAGE_VAR_TAILSCALE_DEVICEID}}
+              key: {{HOMEPAGE_VAR_TAILSCALE_KEY}}
+        - Sonarqube:
+            href: https://sonarqube-1.drongo-bangus.ts.net
+            description: Sonarqube is a code quality platform
+            icon: sonarqube.png
+
+    - Monitoring:
+
+        - Grafana:
+            href: https://grafana.drongo-bangus.ts.net/
+            description: Single Sign-On for the cluster
+            icon: grafana.png
+
+
+
+
+  widgets.yaml: |
+    - search:
+        provider: google
+        target: _blank
+    - openweathermap:
+        label: {{HOMEPAGE_VAR_WEATHER_LABEL}}
+        latitude: {{HOMEPAGE_VAR_LATITUDE}}
+        longitude: {{HOMEPAGE_VAR_LONGITUDE}}
+        units: imperial
+        apiKey: {{HOMEPAGE_VAR_OPENWEATHERMAP_KEY}}
+        cache: 5
+        format:
+          maximumFractionDigits: 1
+    - kubernetes:
+        cluster:
+          show: true
+          cpu: true
+          memory: true
+          showLabel: true
+          label: "talos-homelab"
+        nodes:
+          show: false
+          cpu: false
+          memory: false
+          showLabel: false
+    - resources:
+        backend: resources
+        expanded: false
+        cpu: true
+        memory: true
+    - longhorn:
+        expanded: false
+        total: true
+        labels: true
+        nodes: false 
+  docker.yaml: ""
+  proxmox.yaml: |
+    pvelab:
+      nodes:
+        - name: pvelab
+          url: https://192.168.100.10:8006
+          username: {{HOMEPAGE_VAR_PROXMOX_TOKEN_ID}}
+          password: {{HOMEPAGE_VAR_PROXMOX_TOKEN_SECRET}}
+          node: pvelab
+
+
+  
+  

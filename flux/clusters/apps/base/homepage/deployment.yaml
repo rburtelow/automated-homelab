@@ -1,0 +1,91 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: homepage
+  namespace: homepage
+  labels:
+    app.kubernetes.io/name: homepage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: homepage
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: homepage
+    spec:
+      serviceAccountName: homepage
+      containers:
+      - name: homepage
+        image: ghcr.io/gethomepage/homepage:latest
+        ports:
+        - name: http
+          containerPort: 3000
+          protocol: TCP
+        env:
+        - name: LOG_LEVEL
+          value: "debug"
+        - name: HOMEPAGE_ALLOWED_HOSTS
+          value: "homepage-1.drongo-bangus.ts.net"
+        - name: HOMEPAGE_VAR_PROXMOX_TOKEN_ID
+          valueFrom:
+            secretKeyRef:
+              name: homepage-widget-secrets
+              key: proxmox_api_token_id
+        - name: HOMEPAGE_VAR_PROXMOX_TOKEN_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: homepage-widget-secrets
+              key: proxmox_api_token_secret
+        - name: HOMEPAGE_VAR_OPENWEATHERMAP_KEY
+          valueFrom:
+            secretKeyRef:
+              name: homepage-widget-secrets
+              key: openweathermap_key 
+        - name: HOMEPAGE_VAR_LATITUDE
+          valueFrom:
+            secretKeyRef:
+              name: homepage-widget-secrets
+              key: latitude
+        - name: HOMEPAGE_VAR_LONGITUDE
+          valueFrom:
+            secretKeyRef:
+              name: homepage-widget-secrets
+              key: longitude
+        - name: HOMEPAGE_VAR_WEATHER_LABEL
+          valueFrom:
+            secretKeyRef:
+              name: homepage-widget-secrets
+              key: weather_label
+        - name: HOMEPAGE_VAR_AUTHENTIK_URL
+          valueFrom:
+            secretKeyRef:
+              name: homepage-widget-secrets
+              key: authentik_url
+        - name: HOMEPAGE_VAR_AUTHENTIK_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: homepage-widget-secrets
+              key: authentik_api_key
+        - name: HOMEPAGE_VAR_TAILSCALE_KEY  
+          valueFrom:
+            secretKeyRef:
+              name: homepage-widget-secrets
+              key: tailscale_key
+        - name: HOMEPAGE_VAR_TAILSCALE_DEVICEID
+          valueFrom:
+            secretKeyRef:
+              name: homepage-widget-secrets
+              key: tailscale_deviceid
+        volumeMounts:
+        - name: config
+          mountPath: /app/config
+        - name: logs
+          mountPath: /app/config/logs
+      volumes:
+      - name: config
+        configMap:
+          name: homepage
+      - name: logs
+        emptyDir: {}

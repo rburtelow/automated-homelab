@@ -1,0 +1,53 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: sonarqube
+  namespace: sonarqube
+spec:
+  interval: 10m0s
+  chart:
+    spec:
+      chart: sonarqube
+      version: '>=2026.0.0'
+      sourceRef:
+        kind: HelmRepository
+        name: sonarqube
+        namespace: sonarqube
+      interval: 10m0s
+  valuesFrom:
+    - kind: Secret
+      name: sonarqube-secret
+      valuesKey: monitoringPasscode
+      targetPath: monitoringPasscode
+    - kind: Secret
+      name: sonarqube-secret
+      valuesKey: saml.applicationId
+      targetPath: sonarqube.sonarProperties.sonar\.auth\.saml\.applicationId
+    - kind: Secret
+      name: sonarqube-secret
+      valuesKey: saml.loginUrl
+      targetPath: sonarqube.sonarProperties.sonar\.auth\.saml\.loginUrl
+    - kind: Secret
+      name: sonarqube-secret
+      valuesKey: saml.providerId
+      targetPath: sonarqube.sonarProperties.sonar\.auth\.saml\.providerId
+    - kind: Secret
+      name: sonarqube-secret
+      valuesKey: saml.certificate
+      targetPath: sonarqube.sonarProperties.sonar\.auth\.saml\.certificate\.secured
+  values:
+    community:
+      enabled: true
+    sonarqube:
+      postgresql:
+        auth: {}
+      sonarProperties:
+        sonar.auth.saml.enabled: "true"
+        sonar.auth.saml.providerName: "Authentik"
+        sonar.auth.saml.user.login: "login"
+        sonar.auth.saml.user.name: "name"
+        sonar.auth.saml.user.email: "email"
+        # Optional: Enable group synchronization
+        # sonar.auth.saml.group.name: "groups"
+        # Allow users to sign up
+        sonar.auth.saml.allowUsersToSignUp: "true"

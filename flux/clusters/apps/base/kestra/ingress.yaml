@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kestra
+  namespace: kestra
+  labels:
+    app.kubernetes.io/name: kestra
+  annotations:
+    tailscale.com/hostname: kestra
+spec:
+  ingressClassName: tailscale
+  rules:
+    - host: kestra
+      http:
+        paths:
+          - path: "/"
+            pathType: Prefix
+            backend:
+              service:
+                name: kestra-starter
+                port:
+                  number: 8080
+  tls:
+    - secretName: "kestra"
+      hosts:
+        - kestra

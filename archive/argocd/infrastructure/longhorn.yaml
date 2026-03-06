@@ -1,0 +1,61 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: infrastructure-longhorn
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  project: default
+  source:
+    repoURL: https://charts.longhorn.io
+    chart: longhorn
+    targetRevision: '>=1.10.0'
+    helm:
+      values: |
+        preUpgradeChecker:
+          jobEnabled: false
+          upgradeVersionCheck: false
+        
+        # Ensure RBAC is properly configured
+        rbac:
+          create: true
+        
+        serviceAccount:
+          create: true
+          name: longhorn-service-account
+        
+        # Add necessary ClusterRole permissions for Longhorn
+        longhornManager:
+          serviceAccount: longhorn-service-account
+        
+        # Ensure all necessary resources have proper RBAC permissions
+        defaultSettings:
+          createDefaultDiskLabeledNodes: true 
+          # Configure default disk path for Talos Linux
+          defaultDataPath: /var/lib/longhorn
+          # Enable disk scheduling on all nodes
+          storageMinimalAvailablePercentage: "10"
+        
+        # Enable proper cluster-wide permissions
+        global:
+          cattle:
+            systemDefaultRegistry: ""
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: longhorn-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
+

@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: authentik-server
+  namespace: authentik
+  annotations:
+    tailscale.com/hostname: authentik
+spec:
+  ingressClassName: tailscale
+  rules:
+  - host: authentik
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: authentik-server
+            port:
+              number: 80
+  tls:
+  - secretName: "authentik"
+    hosts:
+    - authentik
+

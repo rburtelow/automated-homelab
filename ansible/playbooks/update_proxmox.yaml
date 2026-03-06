@@ -1,0 +1,45 @@
+---
+- name: Update Proxmox VE host and notify if reboot is required
+  hosts: proxmox
+  remote_user: root
+  vars:
+    slack_webhook_url: "{{ lookup('env', 'SLACK_WEBHOOK_URL') }}"
+  
+  tasks:
+    - name: Update package cache and upgrade all packages
+      apt:
+        update_cache: true
+        upgrade: dist
+        autoremove: true
+        autoclean: true
+        force_apt_get: true
+    
+    - name: Check if kernel update requires reboot
+      shell: |
+        if [ -f /var/run/reboot-required ] && grep -q "kernel" /var/run/reboot-required.pkgs 2>/dev/null; then
+          echo "true"
+        else
+          echo "false"
+        fi
+      register: kernel_updated
+      changed_when: false
+
+    - name: Notify Slack when reboot is required
+      uri:
+        url: "{{ slack_webhook_url }}"
+        method: POST
+        body_format: json
+        body:
+          text: ":warning: {{ inventory_hostname }} requires a reboot after Proxmox updates."
+        status_code: 200
+      delegate_to: localhost
+      when:
+        - kernel_updated.stdout == "true"
+        - slack_webhook_url | length > 0
+
+    - name: Log when Slack webhook is not configured
+      debug:
+        msg: "Reboot required for {{ inventory_hostname }}, but SLACK_WEBHOOK_URL is not set. Skipping Slack notification."
+      when:
+        - kernel_updated.stdout == "true"
+        - slack_webhook_url | length == 0

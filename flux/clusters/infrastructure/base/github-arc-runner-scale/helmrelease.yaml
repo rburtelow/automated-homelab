@@ -1,0 +1,24 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: arc-runner-set
+  namespace: arc-runners
+spec:
+  releaseName: arc-runner-set
+  chart:
+    spec:
+      chart: gha-runner-scale-set
+      sourceRef:
+        kind: HelmRepository
+        name: gha-runner-scale-set
+        namespace: arc-runners
+  interval: 30m
+  install:
+    remediation:
+      retries: 3
+  values:
+    githubConfigUrl: "https://github.com/YOUR_ORG_OR_REPO"
+    githubConfigSecret: arc-runner-secret
+    controllerServiceAccount:
+      namespace: arc-systems
+      name: arc-gha-rs-controller

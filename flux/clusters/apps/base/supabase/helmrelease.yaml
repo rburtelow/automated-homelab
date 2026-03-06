@@ -1,0 +1,61 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: supabase
+  namespace: supabase
+spec:
+  interval: 10m0s
+  timeout: 15m0s
+  install:
+    timeout: 15m0s
+  chart:
+    spec:
+      chart: supabase
+      version: '0.5.0'
+      sourceRef:
+        kind: HelmRepository
+        name: supabase
+        namespace: supabase
+      interval: 10m0s
+  valuesFrom:
+  - kind: Secret
+    name: supabase-secret
+    valuesKey: jwt_secret
+    targetPath: secret.jwt.secret
+  - kind: Secret
+    name: supabase-secret
+    valuesKey: jwt_anon_key
+    targetPath: secret.jwt.anonKey
+  - kind: Secret
+    name: supabase-secret
+    valuesKey: jwt_service_key
+    targetPath: secret.jwt.serviceKey
+  - kind: Secret
+    name: supabase-secret
+    valuesKey: db_password
+    targetPath: secret.db.password
+  - kind: Secret
+    name: supabase-secret
+    valuesKey: smtp_username
+    targetPath: secret.smtp.username
+  - kind: Secret
+    name: supabase-secret
+    valuesKey: smtp_password
+    targetPath: secret.smtp.password
+  - kind: Secret
+    name: supabase-secret
+    valuesKey: dashboard_username
+    targetPath: secret.dashboard.username
+  - kind: Secret
+    name: supabase-secret
+    valuesKey: dashboard_password
+    targetPath: secret.dashboard.password
+  - kind: Secret
+    name: supabase-secret
+    valuesKey: analytics_api_key
+    targetPath: secret.analytics.apiKey
+  values:
+    secret:
+      db:
+        username: supabase
+        database: app

@@ -1,0 +1,58 @@
+- name: Update Rocky Linux hosts
+  hosts: rocky
+  become: yes
+  vars:
+    slack_webhook_url: "{{ lookup('env', 'SLACK_WEBHOOK_URL') }}"
+  
+  tasks:
+    - name: Update package cache and upgrade all packages
+      dnf:
+        update_cache: true
+        name: "*"
+        state: latest
+      register: dnf_result
+      
+    - name: Check if kernel was updated
+      shell: |
+        CURRENT_KERNEL=$(uname -r)
+        LATEST_KERNEL=$(rpm -q kernel --last | head -1 | awk '{print $1}' | sed 's/kernel-//')
+        if [ "$CURRENT_KERNEL" != "$LATEST_KERNEL" ]; then
+          echo "kernel_updated"
+        else
+          echo "no_kernel_update"
+        fi
+      register: kernel_check
+      changed_when: false
+      
+    - name: Notify Slack when reboot is required
+      uri:
+        url: "{{ slack_webhook_url }}"
+        method: POST
+        body_format: json
+        body:
+          text: ":warning: {{ inventory_hostname }} required a reboot after Rocky updates."
+        status_code: 200
+      delegate_to: localhost
+      when:
+        - kernel_check.stdout == "kernel_updated"
+        - slack_webhook_url | length > 0
+
+    - name: Log when Slack webhook is not configured
+      debug:
+        msg: "Reboot required for {{ inventory_hostname }}, but SLACK_WEBHOOK_URL is not set. Skipping Slack notification."
+      when:
+        - kernel_check.stdout == "kernel_updated"
+        - slack_webhook_url | length == 0
+
+    - name: Reboot if kernel was updated
+      reboot:
+        msg: "Rebooting due to kernel update"
+        reboot_timeout: 300
+        pre_reboot_delay: 10
+      when: kernel_check.stdout == "kernel_updated"
+      
+    - name: Wait for system to become reachable
+      wait_for_connection:
+        delay: 30
+        timeout: 300
+      when: kernel_check.stdout == "kernel_updated"

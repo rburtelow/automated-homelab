@@ -1,0 +1,45 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: longhorn
+  namespace: longhorn-system
+spec:
+  interval: 10m0s
+  chart:
+    spec:
+      chart: longhorn
+      version: '>=1.10.0'
+      sourceRef:
+        kind: HelmRepository
+        name: longhorn
+        namespace: longhorn-system
+      interval: 10m0s
+  values:
+    preUpgradeChecker:
+      jobEnabled: false
+      upgradeVersionCheck: false
+
+    # Ensure RBAC is properly configured
+    rbac:
+      create: true
+
+    serviceAccount:
+      create: true
+      name: longhorn-service-account
+
+    # Add necessary ClusterRole permissions for Longhorn
+    longhornManager:
+      serviceAccount: longhorn-service-account
+
+    # Ensure all necessary resources have proper RBAC permissions
+    defaultSettings:
+      createDefaultDiskLabeledNodes: true 
+      # Configure default disk path for Talos Linux
+      defaultDataPath: /var/lib/longhorn
+      # Enable disk scheduling on all nodes
+      storageMinimalAvailablePercentage: "10"
+
+    # Enable proper cluster-wide permissions
+    global:
+      cattle:
+        systemDefaultRegistry: ""

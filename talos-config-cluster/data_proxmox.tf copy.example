@@ -1,0 +1,14 @@
+# Example: How to reference proxmox outputs using terraform_remote_state
+# Uncomment and configure this if proxmox resources are in a separate terraform state
+# 
+# data "terraform_remote_state" "proxmox" {
+#   backend = "local"  # or "s3", "gcs", etc. - match your proxmox backend
+#   config = {
+#     path = "../talos-cluster-proxmox/terraform.tfstate"
+#   }
+# }
+#
+# Then update config.auto.tfvars to use:
+# controlplane_ips = data.terraform_remote_state.proxmox.outputs.proxmox_ip_addresses_talos_cp
+# worker_ips = data.terraform_remote_state.proxmox.outputs.proxmox_ip_addresses_talos_worker
+

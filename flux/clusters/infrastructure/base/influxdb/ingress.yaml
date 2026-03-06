@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: influxdb
+  namespace: influxdb
+  annotations:
+    tailscale.com/hostname: influxdb
+spec:
+  ingressClassName: tailscale
+  rules:
+  - host: influxdb
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: influxdb2
+            port:
+              number: 8086
+  tls:
+  - secretName: influxdb
+    hosts:
+    - influxdb
