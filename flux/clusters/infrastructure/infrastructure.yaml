@@ -219,6 +219,7 @@ spec:
   interval: 10m0s
   dependsOn:
     - name: infrastructure-tailscale-config
+    - name: infrastructure-longhorn
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -226,3 +227,7 @@ spec:
   prune: true
   wait: true
   timeout: 15m
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-gpg
