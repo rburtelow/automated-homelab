@@ -8,8 +8,6 @@ spec:
   timeout: 15m0s
   install:
     timeout: 15m0s
-  upgrade:
-    force: true
   chart:
     spec:
       chart: n8n
@@ -29,6 +27,7 @@ spec:
       count: 1
       persistence:
         enabled: true
+        existingClaim: n8n-main-persistence
         size: 5Gi
         accessMode: ReadWriteOnce
     service:
