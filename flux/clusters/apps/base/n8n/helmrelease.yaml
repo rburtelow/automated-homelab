@@ -11,7 +11,7 @@ spec:
   chart:
     spec:
       chart: n8n
-      version: ">=2.11.0"
+      version: ">=1.0.0"
       sourceRef:
         kind: HelmRepository
         name: n8n
@@ -24,27 +24,27 @@ spec:
       optional: false
   values:
     main:
-      replicaCount: 1
-      deploymentStrategy:
-        type: Recreate
-      persistence:
-        enabled: true
-        size: 5Gi
-        accessModes:
-          - ReadWriteOnce
-      config:
-        db:
-          type: postgresdb
-          postgresdb:
-            # CNPG creates a service: <cluster-name>-rw in the same namespace
-            host: "n8n-postgres-rw"
-            port: 5432
-            database: n8n
-            user: n8n
-        n8n:
-          host: n8n
-          protocol: https
-          port: 5678
-      service:
-        type: ClusterIP
-        port: 5678
+      count: 1
+    persistence:
+      enabled: true
+      size: 5Gi
+      accessMode: ReadWriteOnce
+    service:
+      type: ClusterIP
+      port: 5678
+    # Disable bundled postgres - we use the existing CNPG cluster
+    postgresql:
+      enabled: false
+      # Setting auth.username causes the chart to use the 'password' key
+      # in existingSecret (vs 'postgres-password'), matching our CNPG secret
+      auth:
+        username: "n8n"
+    db:
+      type: postgresdb
+    externalPostgresql:
+      host: "n8n-postgres-rw"
+      port: 5432
+      database: n8n
+      username: n8n
+      # CNPG creates this secret via postgres-secret.yaml (kubernetes.io/basic-auth)
+      existingSecret: "n8n-postgres-user"
