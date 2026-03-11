@@ -80,6 +80,10 @@ data:
             href: https://grafana.drongo-bangus.ts.net/
             description: Single Sign-On for the cluster
             icon: grafana.png
+        - InfluxDB:
+            href: https://influxdb.drongo-bangus.ts.net/
+            description: InfluxDB is a time series database
+            icon: influxdb.png        
 
 
 

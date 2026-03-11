@@ -46,6 +46,30 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
+  name: apps-n8n
+  namespace: flux-system
+spec:
+  interval: 10m0s
+  dependsOn:
+    - name: infrastructure-cert-manager
+    - name: infrastructure-tailscale
+    - name: infrastructure-longhorn
+    - name: infrastructure-cloudnativepg
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  path: ./flux/clusters/apps/base/n8n
+  prune: true
+  wait: true
+  timeout: 5m
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-gpg
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
   name: apps-kestra
   namespace: flux-system
 spec:

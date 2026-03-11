@@ -1,0 +1,49 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: n8n
+  namespace: n8n
+spec:
+  interval: 10m0s
+  timeout: 15m0s
+  install:
+    timeout: 15m0s
+  chart:
+    spec:
+      chart: n8n
+      sourceRef:
+        kind: OCIRepository
+        name: n8n
+        namespace: n8n
+      interval: 10m0s
+  valuesFrom:
+    - kind: Secret
+      name: n8n-env
+      valuesKey: values.yaml
+      optional: false
+  values:
+    main:
+      replicaCount: 1
+      deploymentStrategy:
+        type: Recreate
+      persistence:
+        enabled: true
+        size: 5Gi
+        accessModes:
+          - ReadWriteOnce
+      config:
+        db:
+          type: postgresdb
+          postgresdb:
+            # CNPG creates a service: <cluster-name>-rw in the same namespace
+            host: "n8n-postgres-rw"
+            port: 5432
+            database: n8n
+            user: n8n
+        n8n:
+          host: n8n
+          protocol: https
+          port: 5678
+      service:
+        type: ClusterIP
+        port: 5678
