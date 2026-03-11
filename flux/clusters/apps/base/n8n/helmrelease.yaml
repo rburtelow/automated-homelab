@@ -25,10 +25,10 @@ spec:
   values:
     main:
       count: 1
-    persistence:
-      enabled: true
-      size: 5Gi
-      accessMode: ReadWriteOnce
+      persistence:
+        enabled: true
+        size: 5Gi
+        accessMode: ReadWriteOnce
     service:
       type: ClusterIP
       port: 5678
