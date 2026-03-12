@@ -22,6 +22,11 @@ spec:
       name: n8n-env
       valuesKey: values.yaml
       optional: false
+    - kind: Secret
+      name: n8n-env
+      valuesKey: WEBHOOK_URL
+      targetPath: main.env.WEBHOOK_URL
+      optional: false
   values:
     strategy:
       type: Recreate
