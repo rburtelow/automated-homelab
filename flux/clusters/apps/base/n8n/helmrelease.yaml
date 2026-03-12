@@ -25,9 +25,6 @@ spec:
   values:
     main:
       count: 1
-      extraEnvVars:
-        GENERIC_TIMEZONE: "America/Chicago"
-        TZ: "America/Chicago"
       persistence:
         enabled: true
         existingClaim: n8n-main-persistence
