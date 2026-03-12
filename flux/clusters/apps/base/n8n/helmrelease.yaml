@@ -23,6 +23,7 @@ spec:
       valuesKey: values.yaml
       optional: false
   values:
+    timezone: "America/Chicago"
     main:
       count: 1
       persistence:
