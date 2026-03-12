@@ -23,9 +23,13 @@ spec:
       valuesKey: values.yaml
       optional: false
   values:
-    timezone: "America/Chicago"
     main:
       count: 1
+      env:
+        - name: GENERIC_TIMEZONE
+          value: "America/Chicago"
+        - name: TZ
+          value: "America/Chicago"
       persistence:
         enabled: true
         existingClaim: n8n-main-persistence
