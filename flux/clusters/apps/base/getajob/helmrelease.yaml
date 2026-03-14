@@ -17,7 +17,7 @@ spec:
       interval: 10m0s
   values:
     image:
-      repository: ghcr.io/rburtelow/getajob
+      repository: ghcr.io/rburtelow/helm-charts/getajob
       tag: "0.1.0"
     ingress:
       enabled: true
