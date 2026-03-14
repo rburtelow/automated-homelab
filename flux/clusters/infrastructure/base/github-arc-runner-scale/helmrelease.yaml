@@ -19,6 +19,8 @@ spec:
   values:
     githubConfigUrl: "https://github.com/rburtelow/getajob"
     githubConfigSecret: arc-runner-secret
+    containerMode:
+      type: dind
     controllerServiceAccount:
       namespace: arc-systems
       name: arc-gha-rs-controller
