@@ -16,6 +16,11 @@ spec:
         namespace: getajob
       interval: 10m0s
   values:
+    image:
+      repository: ghcr.io/rburtelow/getajob
+      tag: "0.1.0"
+    imagePullSecrets:
+      - name: ghcr-pull-secret
     ingress:
       enabled: true
       className: tailscale
