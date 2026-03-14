@@ -19,11 +19,20 @@ spec:
     image:
       repository: ghcr.io/rburtelow/getajob
       tag: "0.1.0"
-    imagePullSecrets:
-      - name: ghcr-pull-secret
     ingress:
       enabled: true
       className: tailscale
       host: getajob
       tls: true
       tlsSecretName: getajob
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: Deployment
+              name: getajob
+            patch: |
+              - op: add
+                path: /spec/template/spec/imagePullSecrets
+                value:
+                  - name: ghcr-pull-secret
