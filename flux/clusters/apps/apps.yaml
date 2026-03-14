@@ -46,6 +46,28 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
+  name: apps-getajob
+  namespace: flux-system
+spec:
+  interval: 10m0s
+  dependsOn:
+    - name: infrastructure-cert-manager
+    - name: infrastructure-tailscale
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  path: ./flux/clusters/apps/base/getajob
+  prune: true
+  wait: true
+  timeout: 5m
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-gpg
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
   name: apps-n8n
   namespace: flux-system
 spec:

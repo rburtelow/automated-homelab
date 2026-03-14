@@ -1,0 +1,24 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: getajob
+  namespace: getajob
+spec:
+  interval: 10m0s
+  timeout: 5m0s
+  chart:
+    spec:
+      chart: getajob
+      version: "0.1.0"
+      sourceRef:
+        kind: HelmRepository
+        name: getajob
+        namespace: getajob
+      interval: 10m0s
+  values:
+    ingress:
+      enabled: true
+      className: tailscale
+      host: getajob
+      tls: true
+      tlsSecretName: getajob
