@@ -17,7 +17,7 @@ spec:
     remediation:
       retries: 3
   values:
-    githubConfigUrl: "https://github.com/rburtelow"
+    githubConfigUrl: "https://github.com/rburtelow/getajob"
     githubConfigSecret: arc-runner-secret
     controllerServiceAccount:
       namespace: arc-systems
