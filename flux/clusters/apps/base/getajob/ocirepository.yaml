@@ -7,3 +7,5 @@ spec:
   type: oci
   interval: 10m0s
   url: oci://ghcr.io/rburtelow/helm-charts
+  secretRef:
+    name: ghcr-pull-secret
