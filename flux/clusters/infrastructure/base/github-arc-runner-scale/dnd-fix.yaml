@@ -1,0 +1,63 @@
+template:
+  spec:
+    initContainers:
+      - name: init-dind-externals
+        image: ghcr.io/actions/actions-runner:latest
+        command:
+          - "cp"
+          - "-r"
+          - "-v"
+          - "/home/runner/externals/."
+          - "/home/runner/tmpDir/"
+        volumeMounts:
+          - name: dind-externals
+            mountPath: /home/runner/tmpDir
+    containers:
+      - name: runner
+        image: ghcr.io/actions/actions-runner:latest
+        command: ["/home/runner/run.sh"]
+        env:
+          - name: DOCKER_HOST
+            value: unix:///run/docker/docker.sock
+        securityContext:
+          privileged: true # Needed for /dev/net/tun
+        volumeMounts:
+          - name: work
+            mountPath: /home/runner/_work
+          - name: dind-sock
+            mountPath: /run/docker
+            readOnly: true
+          - name: dev-net-tun
+            mountPath: /dev/net/tun # Mount the host's /dev/net/tun
+      - name: dind
+        image: docker:dind
+        args:
+          - dockerd
+          - --host=unix:///run/docker/docker.sock
+          - --group=$(DOCKER_GROUP_GID)
+        env:
+          - name: DOCKER_GROUP_GID
+            value: "123"
+          # FIX: https://github.com/actions/actions-runner-controller/issues/3159
+          - name: DOCKER_IPTABLES_LEGACY
+            value: "1"
+        securityContext:
+          privileged: true
+        volumeMounts:
+          - name: work
+            mountPath: /home/runner/_work
+          - name: dind-sock
+            mountPath: /run/docker
+          - name: dind-externals
+            mountPath: /home/runner/externals
+    volumes:
+      - name: work
+        emptyDir: {}
+      - name: dind-sock
+        emptyDir: {}
+      - name: dind-externals
+        emptyDir: {}
+      - name: dev-net-tun
+        hostPath:
+          path: /dev/net/tun
+          type: CharDevice # Ensure this is treated as a character device
