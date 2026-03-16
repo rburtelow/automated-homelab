@@ -24,3 +24,10 @@ spec:
     controllerServiceAccount:
       namespace: arc-systems
       name: arc-gha-rs-controller
+    template:
+      spec:
+        containers:
+          - name: runner
+            securityContext:
+              capabilities:
+                add: ["NET_ADMIN"]
