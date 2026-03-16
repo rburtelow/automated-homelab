@@ -5,9 +5,11 @@ metadata:
   namespace: supabase
 spec:
   interval: 10m0s
-  timeout: 15m0s
+  timeout: 30m0s
   install:
-    timeout: 15m0s
+    timeout: 30m0s
+  upgrade:
+    timeout: 30m0s
   chart:
     spec:
       chart: supabase
