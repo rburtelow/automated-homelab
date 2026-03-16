@@ -37,7 +37,7 @@ spec:
   path: ./flux/clusters/apps/base/supabase
   prune: true
   wait: true
-  timeout: 5m
+  timeout: 20m
   decryption:
     provider: sops
     secretRef:
