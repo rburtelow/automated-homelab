@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: supabase-kong-tailscale
+  name: supabase-db-tailscale
   namespace: supabase
   annotations:
     tailscale.com/expose: "true"
@@ -9,10 +9,10 @@ spec:
   type: LoadBalancer
   loadBalancerClass: tailscale
   selector:
-    app.kubernetes.io/name: kong
+    app.kubernetes.io/name: db
     app.kubernetes.io/instance: supabase
   ports:
-    - name: https-kong
+    - name: https-db
       port: 443
-      targetPort: 8000
+      targetPort: 5432
       protocol: TCP
