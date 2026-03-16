@@ -4,15 +4,15 @@ metadata:
   name: supabase-db-tailscale
   namespace: supabase
   annotations:
-    tailscale.com/expose: "true"
+    tailscale.com/hostname: supabase-db
 spec:
   type: LoadBalancer
   loadBalancerClass: tailscale
   selector:
-    app.kubernetes.io/name: db
+    app.kubernetes.io/name: supabase-db
     app.kubernetes.io/instance: supabase
   ports:
-    - name: https-db
+    - name: postgres
       port: 443
       targetPort: 5432
       protocol: TCP
