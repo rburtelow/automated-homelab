@@ -1,0 +1,11 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: Alert
+metadata:
+  name: kustomization-reconcile-error
+spec:
+  eventMatcher:
+    kinds:
+    - Kustomization
+  severity: error
+  providerRef:
+    name: slack
