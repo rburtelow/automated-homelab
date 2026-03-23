@@ -1,0 +1,155 @@
+<mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1200" pageHeight="900" math="0" shadow="0">
+  <root>
+    <mxCell id="0"/>
+    <mxCell id="1" parent="0"/>
+
+    <mxCell id="proxmox" value="Proxmox Host: pvelab  |  192.168.100.10:8006"
+      style="swimlane;startSize=38;fillColor=#f5f5f5;strokeColor=#555555;fontColor=#333333;fontStyle=1;fontSize=13;container=1;pointerEvents=0;"
+      vertex="1" parent="1">
+      <mxGeometry x="20" y="20" width="1020" height="720" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="net_badge" value="Network: 192.168.100.0/24  |  GW: 192.168.100.1  |  Bridge: vmbr0"
+      style="rounded=1;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;"
+      vertex="1" parent="proxmox">
+      <mxGeometry x="10" y="46" width="430" height="34" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="talos_ver" value="Talos OS v1.12.2  |  Cluster: talos-homelab"
+      style="rounded=1;whiteSpace=wrap;fillColor=#f0f0ff;strokeColor=#7777aa;fontSize=10;fontStyle=1;"
+      vertex="1" parent="proxmox">
+      <mxGeometry x="450" y="46" width="310" height="34" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="vip" value="K8s API VIP&#xa;192.168.100.50:6443"
+      style="ellipse;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=11;"
+      vertex="1" parent="proxmox">
+      <mxGeometry x="780" y="40" width="190" height="48" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="cp_lane" value="Control Plane  (etcd + kube-apiserver + scheduler + controller-manager)"
+      style="swimlane;startSize=28;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=11;"
+      vertex="1" parent="proxmox">
+      <mxGeometry x="10" y="94" width="990" height="148" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="cp01" value="&lt;b&gt;talos-cp-01&lt;/b&gt; (bootstrap leader)&lt;br&gt;IP: 192.168.100.125  |  VMID: 201&lt;br&gt;4 vCPU  |  8 GB RAM  |  20 GB"
+      style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;"
+      vertex="1" parent="cp_lane">
+      <mxGeometry x="10" y="32" width="300" height="96" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="cp02" value="&lt;b&gt;talos-cp-02&lt;/b&gt;&lt;br&gt;IP: 192.168.100.96  |  VMID: 202&lt;br&gt;4 vCPU  |  8 GB RAM  |  20 GB"
+      style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;"
+      vertex="1" parent="cp_lane">
+      <mxGeometry x="345" y="32" width="300" height="96" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="cp03" value="&lt;b&gt;talos-cp-03&lt;/b&gt;&lt;br&gt;IP: 192.168.100.62  |  VMID: 203&lt;br&gt;4 vCPU  |  8 GB RAM  |  20 GB"
+      style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;"
+      vertex="1" parent="cp_lane">
+      <mxGeometry x="680" y="32" width="300" height="96" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="worker_lane" value="Worker Nodes  (kubelet + kube-proxy)"
+      style="swimlane;startSize=28;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1;fontSize=11;"
+      vertex="1" parent="proxmox">
+      <mxGeometry x="10" y="262" width="990" height="440" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="w03" value="&lt;b&gt;talos-worker-03&lt;/b&gt;&lt;br&gt;192.168.100.105&lt;br&gt;VMID: 204&lt;br&gt;4 vCPU | 8 GB | 100 GB"
+      style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;"
+      vertex="1" parent="worker_lane">
+      <mxGeometry x="10" y="36" width="230" height="170" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="w04" value="&lt;b&gt;talos-worker-04&lt;/b&gt;&lt;br&gt;192.168.100.197&lt;br&gt;VMID: 205&lt;br&gt;4 vCPU | 8 GB | 100 GB"
+      style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;"
+      vertex="1" parent="worker_lane">
+      <mxGeometry x="250" y="36" width="230" height="170" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="w05" value="&lt;b&gt;talos-worker-05&lt;/b&gt;&lt;br&gt;192.168.100.49&lt;br&gt;VMID: 206&lt;br&gt;4 vCPU | 8 GB | 100 GB"
+      style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;"
+      vertex="1" parent="worker_lane">
+      <mxGeometry x="490" y="36" width="230" height="170" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="w06" value="&lt;b&gt;talos-worker-06&lt;/b&gt;&lt;br&gt;192.168.100.58&lt;br&gt;VMID: 207&lt;br&gt;4 vCPU | 8 GB | 100 GB"
+      style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;"
+      vertex="1" parent="worker_lane">
+      <mxGeometry x="730" y="36" width="230" height="170" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="w07" value="&lt;b&gt;talos-worker-07&lt;/b&gt;&lt;br&gt;192.168.100.88&lt;br&gt;VMID: 208&lt;br&gt;4 vCPU | 8 GB | 100 GB"
+      style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;"
+      vertex="1" parent="worker_lane">
+      <mxGeometry x="10" y="226" width="230" height="170" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="w08" value="&lt;b&gt;talos-worker-08&lt;/b&gt;&lt;br&gt;192.168.100.95&lt;br&gt;VMID: 209&lt;br&gt;4 vCPU | 8 GB | 100 GB"
+      style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;"
+      vertex="1" parent="worker_lane">
+      <mxGeometry x="250" y="226" width="230" height="170" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="w09" value="&lt;b&gt;talos-worker-09&lt;/b&gt;&lt;br&gt;192.168.100.253&lt;br&gt;VMID: 210&lt;br&gt;4 vCPU | 8 GB | 100 GB"
+      style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;"
+      vertex="1" parent="worker_lane">
+      <mxGeometry x="490" y="226" width="230" height="170" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="e_vip_cp01" value="" style="edgeStyle=orthogonalEdgeStyle;dashed=1;strokeColor=#6c8ebf;rounded=1;exitX=0.2;exitY=1;exitDx=0;exitDy=0;" edge="1" source="vip" target="cp01" parent="proxmox">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="e_vip_cp02" value="" style="edgeStyle=orthogonalEdgeStyle;dashed=1;strokeColor=#6c8ebf;rounded=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" source="vip" target="cp02" parent="proxmox">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="e_vip_cp03" value="" style="edgeStyle=orthogonalEdgeStyle;dashed=1;strokeColor=#6c8ebf;rounded=1;exitX=0.8;exitY=1;exitDx=0;exitDy=0;" edge="1" source="vip" target="cp03" parent="proxmox">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="terraform_box" value="OpenTofu / Terraform&#xa;VM Provisioning&#xa;talos-cluster-proxmox/"
+      style="rounded=1;whiteSpace=wrap;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;fontSize=10;"
+      vertex="1" parent="1">
+      <mxGeometry x="20" y="758" width="230" height="70" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="talos_cfg_box" value="OpenTofu / Terraform&#xa;Talos Machine Config&#xa;talos-config-cluster/"
+      style="rounded=1;whiteSpace=wrap;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;fontSize=10;"
+      vertex="1" parent="1">
+      <mxGeometry x="260" y="758" width="230" height="70" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="flux_box" value="Flux GitOps&#xa;apps | infrastructure | flux-system&#xa;flux/"
+      style="rounded=1;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=10;"
+      vertex="1" parent="1">
+      <mxGeometry x="500" y="758" width="230" height="70" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="ansible_box" value="Ansible&#xa;Configuration Management&#xa;ansible/"
+      style="rounded=1;whiteSpace=wrap;fillColor=#ffe6cc;strokeColor=#d6822a;fontStyle=1;fontSize=10;"
+      vertex="1" parent="1">
+      <mxGeometry x="740" y="758" width="230" height="70" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="e_tf_prox" value="provisions VMs" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#9673a6;fontSize=9;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.05;entryY=1;entryDx=0;entryDy=0;" edge="1" source="terraform_box" target="proxmox" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="e_tc_prox" value="configures Talos" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#9673a6;fontSize=9;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" edge="1" source="talos_cfg_box" target="proxmox" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="e_flux_prox" value="GitOps sync" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#82b366;fontSize=9;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" source="flux_box" target="proxmox" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="e_ans_prox" value="configures nodes" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#d6822a;fontSize=9;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" edge="1" source="ansible_box" target="proxmox" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+  </root>
+</mxGraphModel>
