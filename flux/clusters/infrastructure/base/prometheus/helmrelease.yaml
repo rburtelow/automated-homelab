@@ -26,6 +26,8 @@ spec:
   values:
     grafana:
       enabled: true
+      deploymentStrategy:
+        type: Recreate
       persistence:
         enabled: true
         size: 10Gi
