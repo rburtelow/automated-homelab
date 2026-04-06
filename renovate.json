@@ -1,6 +1,7 @@
 {
     "extends": [
-        "config:recommended"
+        "config:recommended",
+        "schedule:automergeDaily"
     ],
     "terraform": {
         "enabled": true
@@ -14,7 +15,11 @@
     "packageRules": [
         {
             "description": "Automatically merge minor and patch-level updates",
-            "matchUpdateTypes": ["minor", "patch", "digest"],
+            "matchUpdateTypes": [
+                "minor",
+                "patch",
+                "digest"
+            ],
             "automerge": true,
             "automergeType": "branch"
         }
