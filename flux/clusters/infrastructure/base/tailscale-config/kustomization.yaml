@@ -3,4 +3,5 @@ kind: Kustomization
 resources:
 - proxyclass.yaml
 - proxygroup.yaml
+- gateway-api-rbac.yaml
 

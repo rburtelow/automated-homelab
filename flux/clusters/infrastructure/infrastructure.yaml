@@ -41,6 +41,8 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
+  dependsOn:
+    - name: infrastructure-gateway-api
   sourceRef:
     kind: GitRepository
     name: flux-system
