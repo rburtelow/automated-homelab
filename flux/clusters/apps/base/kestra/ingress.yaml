@@ -7,6 +7,7 @@ metadata:
     app.kubernetes.io/name: kestra
   annotations:
     tailscale.com/hostname: kestra
+    tailscale.com/proxy-group: tailscale
 spec:
   ingressClassName: tailscale
   rules:

@@ -7,6 +7,7 @@ metadata:
     app.kubernetes.io/name: n8n
   annotations:
     tailscale.com/hostname: n8n
+    tailscale.com/proxy-group: tailscale
 spec:
   ingressClassName: tailscale
   rules:

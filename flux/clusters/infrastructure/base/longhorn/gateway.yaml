@@ -3,6 +3,7 @@ kind: Gateway
 metadata:
   annotations:
     gateway.networking.k8s.io/generator: ingress2gateway-1.0.0
+    tailscale.com/proxy-group: tailscale
   name: tailscale
   namespace: longhorn-system
 spec:
