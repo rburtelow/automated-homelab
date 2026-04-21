@@ -5,5 +5,5 @@ resources:
 - helmrepository.yaml
 - helmrelease.yaml
 - secret.yaml
-- ingress.yaml
+- gateway.yaml
 

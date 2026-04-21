@@ -5,5 +5,5 @@ resources:
 - helmrepository.yaml
 - secret.yaml
 - helmrelease.yaml
-- ingress.yaml
+- gateway.yaml
 - service-tailscale.yaml

@@ -2,6 +2,21 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
+  name: infrastructure-gateway-api
+  namespace: flux-system
+spec:
+  interval: 10m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  path: ./flux/clusters/infrastructure/base/gateway-api
+  prune: true
+  wait: true
+  timeout: 5m
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
   name: infrastructure-cloudnativepg
   namespace: flux-system
 spec:
@@ -104,6 +119,7 @@ spec:
   interval: 10m0s
   dependsOn:
     - name: infrastructure-cert-manager
+    - name: infrastructure-gateway-api
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -122,6 +138,7 @@ spec:
   dependsOn:
     - name: infrastructure-cert-manager
     - name: infrastructure-longhorn
+    - name: infrastructure-gateway-api
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -144,6 +161,7 @@ spec:
   dependsOn:
     - name: infrastructure-cert-manager
     - name: infrastructure-longhorn
+    - name: infrastructure-gateway-api
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -199,6 +217,7 @@ spec:
   interval: 10m0s
   dependsOn:
     - name: infrastructure-longhorn
+    - name: infrastructure-gateway-api
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -240,6 +259,7 @@ spec:
   dependsOn:
     - name: infrastructure-tailscale-config
     - name: infrastructure-longhorn
+    - name: infrastructure-gateway-api
   sourceRef:
     kind: GitRepository
     name: flux-system
