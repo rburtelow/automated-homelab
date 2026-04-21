@@ -43,7 +43,6 @@ spec:
     - path:
         type: PathPrefix
         value: /
-    name: rule-0
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
