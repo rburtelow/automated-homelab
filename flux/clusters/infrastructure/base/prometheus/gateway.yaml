@@ -1,0 +1,70 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  annotations:
+    gateway.networking.k8s.io/generator: ingress2gateway-1.0.0
+  name: tailscale
+  namespace: prometheus-grafana
+spec:
+  gatewayClassName: tailscale
+  listeners:
+  - hostname: grafana
+    name: grafana-http
+    port: 80
+    protocol: HTTP
+  - hostname: grafana
+    name: grafana-https
+    port: 443
+    protocol: HTTPS
+    tls:
+      certificateRefs:
+      - group: ""
+        kind: Secret
+        name: grafana
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  annotations:
+    gateway.networking.k8s.io/generator: ingress2gateway-1.0.0
+  name: grafana-grafana
+  namespace: prometheus-grafana
+spec:
+  hostnames:
+  - grafana
+  parentRefs:
+  - name: tailscale
+    port: 443
+  rules:
+  - backendRefs:
+    - name: kube-prometheus-stack-grafana
+      port: 80
+    matches:
+    - path:
+        type: PathPrefix
+        value: /
+    name: rule-0
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  annotations:
+    gateway.networking.k8s.io/generator: ingress2gateway-1.0.0
+  name: grafana-grafana-http
+  namespace: prometheus-grafana
+spec:
+  hostnames:
+  - grafana
+  parentRefs:
+  - name: tailscale
+    port: 80
+  rules:
+  - filters:
+    - requestRedirect:
+        scheme: https
+        statusCode: 308
+      type: RequestRedirect
+    matches:
+    - path:
+        type: PathPrefix
+        value: /

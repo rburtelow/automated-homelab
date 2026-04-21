@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sonarqube
+  namespace: sonarqube
+  annotations:
+    tailscale.com/hostname: sonarqube
+spec:
+  ingressClassName: tailscale
+  rules:
+  - host: sonarqube
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: sonarqube-sonarqube
+            port:
+              number: 9000
+  tls:
+  - secretName: "sonarqube"
+    hosts:
+    - sonarqube
