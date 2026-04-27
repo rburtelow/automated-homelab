@@ -3,11 +3,8 @@ kind: Ingress
 metadata:
   name: homepage
   namespace: homepage
-  labels:
-    app.kubernetes.io/name: homepage
   annotations:
     tailscale.com/hostname: homepage
-    tailscale.com/proxy-group: tailscale
 spec:
   ingressClassName: tailscale
   rules:
