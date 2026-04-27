@@ -17,7 +17,7 @@ spec:
               service:
                 name: n8n
                 port:
-                  number: 3000
+                  number: 5678
   tls:
     - secretName: "n8n-ingress"
       hosts:
