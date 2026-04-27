@@ -11,8 +11,7 @@ metadata:
 spec:
   ingressClassName: tailscale
   rules:
-    - host: homepage
-      http:
+    - http:
         paths:
           - path: "/"
             pathType: Prefix
