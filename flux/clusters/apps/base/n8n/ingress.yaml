@@ -1,27 +1,24 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: n8n
+  name: n8n-ingress
   namespace: n8n
-  labels:
-    app.kubernetes.io/name: n8n
   annotations:
     tailscale.com/hostname: n8n
-    tailscale.com/proxy-group: tailscale
 spec:
   ingressClassName: tailscale
   rules:
     - host: n8n
       http:
         paths:
-          - path: "/"
+          - path: /
             pathType: Prefix
             backend:
               service:
                 name: n8n
                 port:
-                  number: 5678
+                  number: 3000
   tls:
-    - secretName: "n8n"
+    - secretName: "n8n-ingress"
       hosts:
         - n8n
