@@ -14,4 +14,4 @@ spec:
         namespace: seaweedfs-operator
   values:
     webhook:
-      enabled: false
+      enabled: true
