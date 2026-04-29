@@ -1,7 +1,8 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: cnpg-system
+  name: ranch-management
+  namespace: ranch-management
 spec:
   instances: 1
 
