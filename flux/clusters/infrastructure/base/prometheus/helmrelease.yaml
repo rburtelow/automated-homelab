@@ -79,3 +79,6 @@ spec:
       enabled: true
     nodeExporter:
       enabled: true
+    prometheus-node-exporter:
+      hostRootFsMount:
+        enabled: false
