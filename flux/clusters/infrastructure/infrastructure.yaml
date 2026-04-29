@@ -251,3 +251,20 @@ spec:
     provider: sops
     secretRef:
       name: sops-gpg
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: infrastructure-seeweedfs
+  namespace: flux-system
+spec:
+  interval: 10m0s
+  dependsOn:
+    - name: infrastructure-longhorn
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  path: ./flux/clusters/infrastructure/base/seeweedfs
+  prune: true
+  wait: true
+  timeout: 15m
