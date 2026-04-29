@@ -1,24 +1,24 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: grafana
+  name: grafana-ingress
   namespace: prometheus-grafana
   annotations:
     tailscale.com/hostname: grafana
 spec:
   ingressClassName: tailscale
   rules:
-  - host: grafana
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: kube-prometheus-stack-grafana
-            port:
-              number: 80
+    - host: grafana
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: kube-prometheus-stack-grafana
+                port:
+                  number: 80
   tls:
-  - secretName: grafana
-    hosts:
-    - grafana
+    - secretName: "grafana-ingress"
+      hosts:
+        - grafana
