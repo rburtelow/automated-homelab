@@ -9,7 +9,8 @@ spec:
   type: LoadBalancer
   loadBalancerClass: tailscale
   selector:
-    app.kubernetes.io/name: ranch-management-tcp
+    cnpg.io/cluster: ranch-management
+    role: primary
   ports:
   - name: ranch-management-tcp
     port: 443
