@@ -1,0 +1,21 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: db-ranch-management
+  namespace: flux-system
+spec:
+  interval: 10m0s
+  dependsOn:
+    - name: infrastructure-cloudnativepg
+    - name: infrastructure-tailscale
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  path: ./flux/clusters/db/base/ranch-management
+  prune: true
+  wait: true
+  timeout: 5m
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-gpg
