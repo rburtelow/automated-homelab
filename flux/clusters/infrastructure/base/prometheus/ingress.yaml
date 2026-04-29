@@ -17,7 +17,7 @@ spec:
           service:
             name: kube-prometheus-stack-grafana
             port:
-              number: 3000
+              number: 80
   tls:
   - secretName: grafana
     hosts:
