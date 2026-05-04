@@ -255,7 +255,7 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: infrastructure-seeweedfs
+  name: infrastructure-seaweedfs
   namespace: flux-system
 spec:
   interval: 10m0s
