@@ -1,5 +1,5 @@
 resource "proxmox_vm_qemu" "talos_worker" {
-  for_each = toset(["03", "04", "05", "06", "07", "08", "09"])
+  for_each = toset(["03", "04", "05", "06", "07"])
 
   vmid        = 201 + tonumber(each.value)
   target_node = var.pm_host
