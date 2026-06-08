@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: awx-postgres-config
+    namespace: awx
+type: Opaque
+stringData:
+    host: ENC[AES256_GCM,data:+CLHN2IsCdCww5UJbT+41YCWgGSGmIaxTRKPReMcPA==,iv:UZaKrYgHNiZN3XLStcVkCJVzliANZmk7G1KsEyC4oD4=,tag:lTOeJwyem+GcjlDPboYxSA==,type:str]
+    port: ENC[AES256_GCM,data:sFaURQ==,iv:PcKTkL6CZXppXumcyJfy+Rnntl2WWw6mOLUBRZezQ+Y=,tag:sd5gh+aChNi6ZGIz2bsz5g==,type:str]
+    database: ENC[AES256_GCM,data:aUrw,iv:ANYC7B+oCCTWlFLwBfBSFgMYVF6QdLN3QPl6K75Us8Y=,tag:e6MOSnjYPS03oUYNhHXi/Q==,type:str]
+    username: ENC[AES256_GCM,data:sQpq,iv:vHrSkI6WdLBsBh3t6f61TkEBcDJjM4NxP4eEJWdTmNE=,tag:YBrlD+jOIuNRnaRWLLs2kA==,type:str]
+    password: ENC[AES256_GCM,data:jUbmaAjp68E=,iv:zpRrMHS3ij/T4ygShvBW8GtNQgfn5E3xeNbmsxeHJiI=,tag:Wi827rIsRf8FtRN3j/et7Q==,type:str]
+    sslmode: ENC[AES256_GCM,data:NW8VmrB5,iv:wWVVUTD4RiQzwpF6JhE//VraJhHHJUUzeL99x1XXWII=,tag:efz6EtTsNCKPrdWNCG5xJw==,type:str]
+    target_session_attrs: ENC[AES256_GCM,data:FLRh,iv:grUvFaw96HrNwbYrT5uk4bGaDStaUrcWMKjz84HMDuA=,tag:9PgTQQ4aNeq3xEXA7mJlmg==,type:str]
+    type: ENC[AES256_GCM,data:ZFoCjhnA6Sx3,iv:hd7CfZdJvOhgrpIZphb6nZSfVbtEOLf48970gx0RVsU=,tag:B9zXYQjXTbnB9xDrMuD4Vg==,type:str]
+sops:
+    encrypted_regex: ^(data|stringData)$
+    lastmodified: "2026-06-08T23:51:04Z"
+    mac: ENC[AES256_GCM,data:NjnZ+/NIpy7vitz53yGnGrAthPoeqPon42OXuQ6/G1iCFIbH6m6HWeqbVJ9d30bOn8KiqucUz3voyKiAguM9hLYd3AS3DdCZAf9ndDXWZazN/yxR4qhoe+ds2d/gzeiiXTXmeubwCIptf/my1c+ewgqMs5dZ4WTjJDvb8CLDdQQ=,iv:yyKMq1XgzhOXogO8MZ76rynTopghweP8texbYT11I4w=,tag:fy13bG1mzrqrn3NDb2CjbQ==,type:str]
+    pgp:
+        - created_at: "2026-06-08T23:51:04Z"
+          enc: |-
+            -----BEGIN PGP MESSAGE-----
+
+            hQIMA5XGugaz6vRlAQ//XpQtZAoBKWBPCWUrF7li88Qau7seQTpLGz5O6/PCQeAs
+            Bm/lnnW81NZJSwCOffzOBlWbNgZIx5c14eCMJvnr/0bZTjkIuiPZ+qspzHmKZ4tn
+            F24n9rUw8DLUYCDXO35vd74NMSDmXqx+X8tj+G2SoQBsV1nR3kzXrZm4zNHQHlgv
+            GDtO6MHvq+mNxD/Fl03e9SHEsj8tirT44wrjvwX/x4AGQyne7AHeYKDuR2gGVZoA
+            R26XU9TOuC46UqY8Q4Ve62u7Tba9kWtevQCM6UAuUluk3TE24+dxBoyhoPRlHQOA
+            ZoXYwzhIeNnfqDMQrGfigS+pkYUPbswLTREbWiycyzOu9HdenjzoxtKDJ6xo2G5O
+            AN4t/XzgHaBK5ObuIRY8PRgbQognroc5+A3w7ChNGPXjf05Toqhudb4xzkz+3HhZ
+            EoUoQ2DyR8siLAGMDLmpZ3Lngc7H2lTWVMqzg+n/OSCd67RwAOkJIBXM3hthHjrF
+            CYqGR00rnB7uLm8V4/ureKMJJ39PCr61bORM51WDr8VzS+/jsXebUKrkHOpVIy/X
+            Hh12E44tRXAMNe9rFpiS0hP46CVx5YZbzgP/pIYCK27cD/Nr6jkWuOuobzM8LZsC
+            8EH7LzWMrpLOVE0AIDbuvNw9a1FXhKvawpOnJ4xOOgLtNk7Ptf8FJZ4i5qRgf+bU
+            aAEJAhAV1OfC8wKzZNgYBEH1Gmpr0RftvEoK1eyIaB+Z3PNqFXi8tDY9zMjwgeBM
+            h+BJ7IGzwcqP+dUXT1y1yiQdwe3oNITdIyuCEKUt+vZnTtKdPU9p+AGxCAQly2dZ
+            lwW4YIGgh0fR
+            =hyuC
+            -----END PGP MESSAGE-----
+          fp: FB5C16FB8DB546BB01DE0ED9DCCC989D57A72B56
+    version: 3.13.1

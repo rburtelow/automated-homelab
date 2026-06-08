@@ -1,11 +1,8 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
-  name: getajob
-  namespace: getajob
+  name: awx-operator
+  namespace: awx
 spec:
-  type: oci
   interval: 10m0s
-  url: oci://ghcr.io/rburtelow/helm-charts
-  secretRef:
-    name: ghcr-pull-secret
+  url: https://ansible.github.io/awx-operator/

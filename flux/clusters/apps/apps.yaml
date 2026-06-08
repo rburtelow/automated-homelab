@@ -73,18 +73,16 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-#  dependsOn:
-#    - name: infrastructure-cert-manager
-#    - name: infrastructure-tailscale
-#    - name: infrastructure-longhorn
-#    - name: infrastructure-cloudnativepg
+  dependsOn:
+    - name: infrastructure-tailscale
+    - name: db-awx
   sourceRef:
     kind: GitRepository
     name: flux-system
   path: ./flux/clusters/apps/base/awx-operator
   prune: true
   wait: true
-  timeout: 5m
+  timeout: 15m
   decryption:
     provider: sops
     secretRef:
