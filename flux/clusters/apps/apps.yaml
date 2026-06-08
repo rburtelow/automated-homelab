@@ -73,7 +73,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  dependsOn:
+#  dependsOn:
 #    - name: infrastructure-cert-manager
 #    - name: infrastructure-tailscale
 #    - name: infrastructure-longhorn
