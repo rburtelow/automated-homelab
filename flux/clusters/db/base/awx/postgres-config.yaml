@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Secret
 metadata:
     name: awx-postgres-config
-    namespace: awx
+    namespace: awx-operator
 type: Opaque
 stringData:
     host: ENC[AES256_GCM,data:+CLHN2IsCdCww5UJbT+41YCWgGSGmIaxTRKPReMcPA==,iv:UZaKrYgHNiZN3XLStcVkCJVzliANZmk7G1KsEyC4oD4=,tag:lTOeJwyem+GcjlDPboYxSA==,type:str]

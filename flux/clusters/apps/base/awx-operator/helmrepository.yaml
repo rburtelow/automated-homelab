@@ -2,7 +2,7 @@ apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
   name: awx-operator
-  namespace: awx
+  namespace: awx-operator
 spec:
   interval: 10m0s
-  url: https://ansible.github.io/awx-operator/
+  url: https://ansible-community.github.io/awx-operator-helm/
