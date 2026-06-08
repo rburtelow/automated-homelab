@@ -2,29 +2,17 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: awx-operator
-  namespace: awx
+  namespace: awx-operator
 spec:
   interval: 10m0s
-  timeout: 15m0s
+  timeout: 5m0s
   chart:
     spec:
-      chart: awx-operator
-      version: "3.2.1"
+      chart: awx-operator/awx-operator
+      version: "*"
       sourceRef:
         kind: HelmRepository
         name: awx-operator
-        namespace: awx
+        namespace: awx-operator
       interval: 10m0s
-  values:
-    AWX:
-      enabled: true
-      name: awx
-      spec:
-        admin_user: admin
-        ingress_type: ingress
-        ingress_class_name: tailscale
-        ingress_annotations:
-          tailscale.com/proxy-group: tailscale
-        hostname: awx
-        ingress_tls_secret: awx
-        postgres_configuration_secret: awx-postgres-config
+ 
