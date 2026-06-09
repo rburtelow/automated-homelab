@@ -16,3 +16,6 @@ spec:
       name: '*'
     - kind: HelmRepository
       name: '*'
+  exclusionList:
+    - ".*kustomization/db-awx.*configured.*"
+    - ".*kustomization/apps-awx.*configured.*"
