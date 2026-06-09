@@ -8,7 +8,7 @@ spec:
   timeout: 5m0s
   chart:
     spec:
-      chart: awx-operator/awx-operator
+      chart: awx-operator
       version: "*"
       sourceRef:
         kind: HelmRepository
