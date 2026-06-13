@@ -1,0 +1,17 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: money-match
+  namespace: money-match
+spec:
+  instances: 1
+
+  storage:
+    size: 10Gi
+
+  bootstrap:
+    initdb:
+      database: money-match
+      owner: money-match
+      secret:
+        name: money-match-db-password
