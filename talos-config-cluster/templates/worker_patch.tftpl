@@ -8,6 +8,15 @@ machine:
           - bind
           - rshared
           - rw
+%{ if extra_longhorn_disk ~}
+      - destination: /var/lib/longhorn/extra
+        type: bind
+        source: /var/mnt/longhorn-extra
+        options:
+          - bind
+          - rshared
+          - rw
+%{ endif ~}
     nodeLabels:
       node.longhorn.io/create-default-disk: "true"
   install:
@@ -23,3 +32,16 @@ machine:
         routes:
           - network: 0.0.0.0/0
             gateway: ${network_gateway}
+%{ if extra_longhorn_disk ~}
+---
+apiVersion: v1alpha1
+kind: UserVolumeConfig
+name: longhorn-extra
+provisioning:
+  diskSelector:
+    match: disk.transport == 'virtio' && !system_disk
+  minSize: 90GB
+  grow: true
+filesystem:
+  type: xfs
+%{ endif ~}

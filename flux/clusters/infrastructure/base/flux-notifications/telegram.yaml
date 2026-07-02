@@ -1,0 +1,15 @@
+ #provider-telegram.yaml
+# Configures Flux to send notifications to Telegram
+apiVersion: notification.toolkit.fluxcd.io/v1beta3
+kind: Provider
+metadata:
+  name: telegram-provider
+  namespace: flux-system
+spec:
+  # Use "telegram" as the provider type
+  type: telegram
+  # The Telegram chat ID where messages will be sent
+  channel: "8370769593"
+  # Reference to the secret containing the bot token
+  secretRef:
+    name: telegram-bot-token

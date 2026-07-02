@@ -80,6 +80,7 @@ resource "talos_machine_configuration_apply" "worker" {
       talos_version       = var.talos_version
       ip_address          = "${each.value}/24"
       network_gateway     = var.talos_network_gateway
+      extra_longhorn_disk = contains(var.worker_extra_disk_keys, each.key)
     }),
   ]
 }

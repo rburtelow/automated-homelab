@@ -29,3 +29,9 @@ variable "worker_ips" {
   description = "Map of worker IP addresses, keyed by node number (e.g., { \"03\" = \"192.168.100.8\", \"04\" = \"192.168.100.239\" })"
 }
 
+variable "worker_extra_disk_keys" {
+  type        = list(string)
+  default     = []
+  description = "Worker node keys (matching worker_ips) that have an extra non-system virtio disk to provision as a Longhorn disk mounted at /var/lib/longhorn/extra"
+}
+
