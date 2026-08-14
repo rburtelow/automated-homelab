@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   providerRef:
-    name: slack
+    name: telegram-provider
   eventSeverity: error
   eventSources:
     - kind: Kustomization
