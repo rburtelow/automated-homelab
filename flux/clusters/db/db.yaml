@@ -41,3 +41,26 @@ spec:
     provider: sops
     secretRef:
       name: sops-gpg
+
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: db-diaper-party
+  namespace: flux-system
+spec:
+  interval: 10m0s
+  dependsOn:
+    - name: infrastructure-cloudnativepg
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  path: ./flux/clusters/db/base/diaper-party
+  prune: true
+  wait: true
+  timeout: 5m
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-gpg
+
