@@ -1,0 +1,19 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: sonarqube-postgres
+  namespace: sonarqube
+spec:
+  instances: 1
+
+  storage:
+    size: 10Gi
+
+  # No bootstrap.initdb.secret: CloudNativePG generates the credentials and
+  # stores them in the sonarqube-postgres-app secret, which the SonarQube
+  # HelmRelease consumes via jdbcOverwrite.jdbcSecretName. Nothing outside the
+  # cluster connects to this database, so there is no secret to keep in git.
+  bootstrap:
+    initdb:
+      database: sonarqube
+      owner: sonarqube

@@ -144,6 +144,7 @@ spec:
   dependsOn:
     - name: infrastructure-cert-manager
     - name: infrastructure-longhorn
+    - name: infrastructure-cloudnativepg
   sourceRef:
     kind: GitRepository
     name: flux-system

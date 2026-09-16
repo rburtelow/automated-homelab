@@ -5,6 +5,13 @@ metadata:
   namespace: sonarqube
 spec:
   interval: 10m0s
+  timeout: 15m0s
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   chart:
     spec:
       chart: sonarqube
@@ -22,32 +29,44 @@ spec:
     - kind: Secret
       name: sonarqube-secret
       valuesKey: saml.applicationId
-      targetPath: sonarqube.sonarProperties.sonar\.auth\.saml\.applicationId
+      targetPath: sonarProperties.sonar\.auth\.saml\.applicationId
     - kind: Secret
       name: sonarqube-secret
       valuesKey: saml.loginUrl
-      targetPath: sonarqube.sonarProperties.sonar\.auth\.saml\.loginUrl
+      targetPath: sonarProperties.sonar\.auth\.saml\.loginUrl
     - kind: Secret
       name: sonarqube-secret
       valuesKey: saml.providerId
-      targetPath: sonarqube.sonarProperties.sonar\.auth\.saml\.providerId
+      targetPath: sonarProperties.sonar\.auth\.saml\.providerId
     - kind: Secret
       name: sonarqube-secret
       valuesKey: saml.certificate
-      targetPath: sonarqube.sonarProperties.sonar\.auth\.saml\.certificate\.secured
+      targetPath: sonarProperties.sonar\.auth\.saml\.certificate\.secured
   values:
     community:
       enabled: true
-    sonarqube:
-      postgresql:
-        auth: {}
-      sonarProperties:
-        sonar.auth.saml.enabled: "true"
-        sonar.auth.saml.providerName: "Authentik"
-        sonar.auth.saml.user.login: "login"
-        sonar.auth.saml.user.name: "name"
-        sonar.auth.saml.user.email: "email"
-        # Optional: Enable group synchronization
-        # sonar.auth.saml.group.name: "groups"
-        # Allow users to sign up
-        sonar.auth.saml.allowUsersToSignUp: "true"
+    # External PostgreSQL provided by the sonarqube-postgres CloudNativePG
+    # cluster. Without this SonarQube falls back to the embedded H2 database in
+    # an emptyDir, which is wiped on every pod restart.
+    jdbcOverwrite:
+      enabled: true
+      jdbcUrl: "jdbc:postgresql://sonarqube-postgres-rw:5432/sonarqube"
+      jdbcUsername: sonarqube
+      jdbcSecretName: sonarqube-postgres-app
+      jdbcSecretPasswordKey: password
+    # Persist /opt/sonarqube (Elasticsearch index, plugins, extensions).
+    persistence:
+      enabled: true
+      storageClass: longhorn
+      accessMode: ReadWriteOnce
+      size: 10Gi
+    sonarProperties:
+      sonar.auth.saml.enabled: "true"
+      sonar.auth.saml.providerName: "Authentik"
+      sonar.auth.saml.user.login: "login"
+      sonar.auth.saml.user.name: "name"
+      sonar.auth.saml.user.email: "email"
+      # Optional: Enable group synchronization
+      # sonar.auth.saml.group.name: "groups"
+      # Allow users to sign up
+      sonar.auth.saml.allowUsersToSignUp: "true"
