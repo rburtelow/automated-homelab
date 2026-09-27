@@ -1,18 +1,17 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: water-taxi-simulator
+  name: water-taxi-simulator-ingress
   namespace: water-taxi-simulator
-  labels:
-    app.kubernetes.io/name: water-taxi-simulator
   annotations:
     tailscale.com/hostname: water-taxi-simulator
 spec:
   ingressClassName: tailscale
   rules:
-    - http:
+    - host: water-taxi-simulator
+      http:
         paths:
-          - path: "/"
+          - path: /
             pathType: Prefix
             backend:
               service:
@@ -20,6 +19,6 @@ spec:
                 port:
                   number: 3000
   tls:
-    - secretName: "water-taxi-simulator"
+    - secretName: "water-taxi-simulator-ingress"
       hosts:
         - water-taxi-simulator
