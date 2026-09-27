@@ -15,6 +15,8 @@ spec:
       labels:
         app.kubernetes.io/name: water-taxi-simulator
     spec:
+      imagePullSecrets:
+        - name: dockerhub-pull-secret
       containers:
         - name: water-taxi-simulator
           image: docker.io/rburtelow/water-taxi-simulator:latest
