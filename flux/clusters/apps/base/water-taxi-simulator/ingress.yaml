@@ -7,12 +7,10 @@ metadata:
     app.kubernetes.io/name: water-taxi-simulator
   annotations:
     tailscale.com/hostname: water-taxi-simulator
-    tailscale.com/proxy-group: tailscale
 spec:
   ingressClassName: tailscale
   rules:
-    - host: water-taxi-simulator
-      http:
+    - http:
         paths:
           - path: "/"
             pathType: Prefix
