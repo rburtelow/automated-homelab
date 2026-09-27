@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: water-taxi-simulator
+  namespace: water-taxi-simulator
+  labels:
+    app.kubernetes.io/name: water-taxi-simulator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: water-taxi-simulator
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: water-taxi-simulator
+    spec:
+      containers:
+        - name: water-taxi-simulator
+          image: docker.io/rburtelow/water-taxi-simulator:latest
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          env:
+            - name: NEXT_PUBLIC_SUPABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: water-taxi-simulator-env
+                  key: NEXT_PUBLIC_SUPABASE_URL
+            - name: SUPABASE_SERVICE_ROLE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: water-taxi-simulator-env
+                  key: SUPABASE_SERVICE_ROLE_KEY
