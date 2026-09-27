@@ -22,7 +22,7 @@ spec:
           image: docker.io/rburtelow/water-taxi-simulator:latest
           ports:
             - name: http
-              containerPort: 3000
+              containerPort: 8080
               protocol: TCP
           env:
             - name: NEXT_PUBLIC_SUPABASE_URL
