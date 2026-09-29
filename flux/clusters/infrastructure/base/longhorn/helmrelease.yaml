@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: longhorn
-      version: '>=0.0.0'
+      version: '~1.12.0' # pinned: 1.13 requires k8s >=1.34 on all nodes; bump deliberately
       sourceRef:
         kind: HelmRepository
         name: longhorn
