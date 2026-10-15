@@ -1,0 +1,23 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: mailpit
+  namespace: mailpit
+spec:
+  interval: 10m0s
+  chart:
+    spec:
+      chart: mailpit
+      version: "~0.37.0"
+      sourceRef:
+        kind: HelmRepository
+        name: jouve
+        namespace: mailpit
+      interval: 10m0s
+  values:
+    # RWO Longhorn volume can't attach to two pods during a rolling update
+    updateStrategy:
+      type: Recreate
+    persistence:
+      enabled: true
+      size: 1Gi
