@@ -1,0 +1,17 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: ultrasignup
+  namespace: ultrasignup
+spec:
+  instances: 1
+
+  storage:
+    size: 2Gi
+
+  bootstrap:
+    initdb:
+      database: ultrasignup
+      owner: ultrasignup
+      secret:
+        name: ultrasignup-db-password
