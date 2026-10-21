@@ -9,7 +9,7 @@ data:
   kubernetes.yaml: |
     mode: cluster
   settings.yaml: |
-    theme: dark
+    theme: light
     color: slate
     useEqualHeights: true
     datetime:
