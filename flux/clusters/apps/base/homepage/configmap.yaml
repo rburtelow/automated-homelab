@@ -54,7 +54,7 @@ data:
     - Security:
     
         - Authentik:
-            href: https://authentik-1.drongo-bangus.ts.net/
+            href: https://authentik.drongo-bangus.ts.net/
             description: Single Sign-On for the cluster
             icon: authentik.png
             widget:
@@ -70,7 +70,7 @@ data:
               deviceid: {{HOMEPAGE_VAR_TAILSCALE_DEVICEID}}
               key: {{HOMEPAGE_VAR_TAILSCALE_KEY}}
         - Sonarqube:
-            href: https://sonarqube-1.drongo-bangus.ts.net
+            href: https://sonarqube.drongo-bangus.ts.net
             description: Sonarqube is a code quality platform
             icon: sonarqube.png
 
