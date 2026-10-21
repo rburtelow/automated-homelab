@@ -1,0 +1,3 @@
+# Repos under rburtelow/* are auto-discovered (archived repos, forks and empty
+# repos are skipped). List a repo name here to leave it out of the sweep.
+exclude: []

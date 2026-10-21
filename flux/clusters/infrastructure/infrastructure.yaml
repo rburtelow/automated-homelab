@@ -226,3 +226,43 @@ spec:
   prune: true
   wait: true
   timeout: 15m
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: infrastructure-renovate
+  namespace: flux-system
+spec:
+  interval: 10m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  path: ./flux/clusters/infrastructure/base/renovate
+  prune: true
+  wait: false
+  timeout: 5m
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-gpg
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: infrastructure-security-sweep
+  namespace: flux-system
+spec:
+  interval: 10m0s
+  dependsOn:
+    - name: infrastructure-sonarqube
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  path: ./flux/clusters/infrastructure/base/security-sweep
+  prune: true
+  wait: false
+  timeout: 5m
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-gpg

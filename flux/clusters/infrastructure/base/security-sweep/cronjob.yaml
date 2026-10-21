@@ -1,0 +1,92 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: security-sweep
+  namespace: security-sweep
+spec:
+  schedule: "0 3 * * 0"   # Sundays 03:00 Chicago, ahead of Monday's Renovate PRs
+  timeZone: America/Chicago
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      activeDeadlineSeconds: 14400
+      ttlSecondsAfterFinished: 1209600
+      template:
+        spec:
+          restartPolicy: Never
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 10001
+            runAsGroup: 10001
+            fsGroup: 10001
+            seccompProfile:
+              type: RuntimeDefault
+          containers:
+            - name: sweep
+              image: ghcr.io/rburtelow/security-sweep:latest
+              imagePullPolicy: Always
+              env:
+                - name: SONAR_HOST_URL
+                  value: http://sonarqube-sonarqube.sonarqube.svc.cluster.local:9000
+                - name: GH_OWNER
+                  value: rburtelow
+                - name: SWEEP_CONFIG
+                  value: /config/sweep.yaml
+                - name: WORK
+                  value: /work
+                - name: TRIVY_CACHE_DIR
+                  value: /cache/trivy
+                - name: SONAR_USER_HOME
+                  value: /tmp/.sonar
+                - name: HOME
+                  value: /tmp
+                - name: SONAR_SCANNER_OPTS
+                  value: "-Xmx1536m"
+                - name: IMPORT_EXTERNAL
+                  value: "true"
+                # ONLY: "fourteenr"   # uncomment for a single-repo test run
+                - name: GITHUB_TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: sweep-secret
+                      key: github_token
+                - name: SONAR_TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: sweep-secret
+                      key: sonar_token
+              resources:
+                requests:
+                  cpu: 500m
+                  memory: 1Gi
+                limits:
+                  memory: 3Gi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop: ["ALL"]
+              volumeMounts:
+                - name: config
+                  mountPath: /config
+                  readOnly: true
+                - name: work
+                  mountPath: /work
+                - name: cache
+                  mountPath: /cache
+                - name: tmp
+                  mountPath: /tmp
+          volumes:
+            - name: config
+              configMap:
+                name: sweep-config
+            - name: work
+              emptyDir:
+                sizeLimit: 10Gi
+            - name: cache
+              emptyDir:
+                sizeLimit: 2Gi
+            - name: tmp
+              emptyDir: {}

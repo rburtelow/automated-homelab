@@ -1,0 +1,52 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "dryRun": "full",
+  "platform": "github",
+  "autodiscover": true,
+  "autodiscoverFilter": ["rburtelow/*"],
+  "onboarding": false,
+  "requireConfig": "optional",
+  "gitAuthor": "Renovate Bot <renovate-bot@users.noreply.github.com>",
+  "timezone": "America/Chicago",
+  "schedule": ["before 6am on monday"],
+  "extends": [
+    "config:recommended",
+    ":dependencyDashboard",
+    "helpers:pinGitHubActionDigests"
+  ],
+  "minimumReleaseAge": "3 days",
+  "internalChecksFilter": "strict",
+  "prConcurrentLimit": 10,
+  "prHourlyLimit": 0,
+  "osvVulnerabilityAlerts": true,
+  "vulnerabilityAlerts": {
+    "labels": ["security"]
+  },
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 6am on the first day of the month"]
+  },
+  "flux": {
+    "managerFilePatterns": ["/(^|/)clusters/.+\\.ya?ml$/"]
+  },
+  "kubernetes": {
+    "managerFilePatterns": ["/(^|/)clusters/.+\\.ya?ml$/"]
+  },
+  "packageRules": [
+    {
+      "description": "Minor and patch updates arrive as one weekly PR per repo.",
+      "matchUpdateTypes": ["minor", "patch", "digest"],
+      "groupName": "non-major dependencies"
+    },
+    {
+      "description": "GitHub Actions get their own PR.",
+      "matchManagers": ["github-actions"],
+      "groupName": "GitHub Actions"
+    },
+    {
+      "description": "Cluster components (HelmReleases, images) never get grouped: one PR per component so a bad bump is easy to revert.",
+      "matchManagers": ["flux", "kubernetes"],
+      "groupName": null
+    }
+  ]
+}
