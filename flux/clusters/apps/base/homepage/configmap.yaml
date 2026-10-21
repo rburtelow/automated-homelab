@@ -10,9 +10,8 @@ data:
     mode: cluster
   settings.yaml: |
     theme: light
-    color: slate
     useEqualHeights: true
-    datetime:
+    datetime: 
       text_size: xl
       format:
         timeStyle: short
