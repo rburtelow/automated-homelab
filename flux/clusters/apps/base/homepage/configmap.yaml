@@ -48,10 +48,6 @@ data:
             href: https://authentik.drongo-bangus.ts.net/
             description: Single Sign-On for the cluster
             icon: authentik.png
-            widget:
-              type: authentik
-              url: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
-              key: {{HOMEPAGE_VAR_AUTHENTIK_API_KEY}}
         - Tailscale:
             href: https://login.tailscale.com/admin/machines
             description: Tailscale is a VPN for the cluster
