@@ -38,19 +38,10 @@ data:
               username: {{HOMEPAGE_VAR_PROXMOX_TOKEN_ID}}
               password: {{HOMEPAGE_VAR_PROXMOX_TOKEN_SECRET}}
         - Longhorn:
-            href: https://longhorn-ui-1.drongo-bangus.ts.net
+            href: https://longhorn-ui.drongo-bangus.ts.net
             description: Longhorn is a container storage platform
             icon: longhorn.png
-        - Nextcloud:
-            href: https://nextcloud.drongo-bangus.ts.net
-            description: Nextcloud is a file sharing and collaboration platform
-            icon: nextcloud.png   
-            widget:
-              type: nextcloud
-              url: https://192.168.100.97
-              #username: {{HOMEPAGE_VAR_NEXTCLOUD_USERNAME}}
-              #password: {{HOMEPAGE_VAR_NEXTCLOUD_PASSWORD}}
-  
+
     - Security:
     
         - Authentik:
