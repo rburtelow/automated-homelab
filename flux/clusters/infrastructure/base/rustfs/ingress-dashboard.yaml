@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: rustfs-dashboard
+  namespace: rustfs
+  annotations:
+    tailscale.com/hostname: rustfs-dashboard
+spec:
+  ingressClassName: tailscale
+  rules:
+  - host: rustfs-dashboard
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: rustfs-svc
+            port:
+              number: 9001
+  tls:
+  - secretName: rustfs-dashboard
+    hosts:
+    - rustfs-dashboard
