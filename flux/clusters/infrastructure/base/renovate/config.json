@@ -46,6 +46,16 @@
       "description": "Cluster components (HelmReleases, images) never get grouped: one PR per component so a bad bump is easy to revert.",
       "matchManagers": ["flux", "kubernetes"],
       "groupName": null
+    },
+    {
+      "description": "ARC controller and runner scale set must move together.",
+      "matchPackageNames": ["gha-runner-scale-set-controller", "gha-runner-scale-set"],
+      "groupName": "actions-runner-controller"
+    },
+    {
+      "description": "Longhorn 1.13 needs k8s >=1.34 on every node; hold until that's done.",
+      "matchPackageNames": ["longhorn"],
+      "allowedVersions": "<1.13.0"
     }
   ]
 }
