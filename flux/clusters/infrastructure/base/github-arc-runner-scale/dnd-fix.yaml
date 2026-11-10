@@ -2,7 +2,7 @@ template:
   spec:
     initContainers:
       - name: init-dind-externals
-        image: ghcr.io/actions/actions-runner:latest
+        image: ghcr.io/actions/actions-runner:2.338.2
         command:
           - "cp"
           - "-r"
@@ -14,7 +14,7 @@ template:
             mountPath: /home/runner/tmpDir
     containers:
       - name: runner
-        image: ghcr.io/actions/actions-runner:latest
+        image: ghcr.io/actions/actions-runner:2.338.2
         command: ["/home/runner/run.sh"]
         env:
           - name: DOCKER_HOST
@@ -30,7 +30,7 @@ template:
           - name: dev-net-tun
             mountPath: /dev/net/tun # Mount the host's /dev/net/tun
       - name: dind
-        image: docker:dind
+        image: docker:29.8.1-dind
         args:
           - dockerd
           - --host=unix:///run/docker/docker.sock
