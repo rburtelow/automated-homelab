@@ -48,6 +48,11 @@
       "groupName": null
     },
     {
+      "description": "Docker and OCI registries other than Docker Hub (ghcr.io and the like) publish no release dates. With minimumReleaseAge set, Renovate holds dateless updates as pending forever, so let them through without a date.",
+      "matchDatasources": ["docker"],
+      "minimumReleaseAgeBehaviour": "timestamp-optional"
+    },
+    {
       "description": "ARC controller and runner scale set must move together.",
       "matchPackageNames": ["gha-runner-scale-set-controller", "gha-runner-scale-set"],
       "groupName": "actions-runner-controller"
