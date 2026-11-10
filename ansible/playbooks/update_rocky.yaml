@@ -1,9 +1,7 @@
 - name: Update Rocky Linux hosts
   hosts: rocky
   become: yes
-  vars:
-    slack_webhook_url: "{{ lookup('env', 'SLACK_WEBHOOK_URL') }}"
-  
+
   tasks:
     - name: Update package cache and upgrade all packages
       dnf:
@@ -24,26 +22,6 @@
       register: kernel_check
       changed_when: false
       
-    - name: Notify Slack when reboot is required
-      uri:
-        url: "{{ slack_webhook_url }}"
-        method: POST
-        body_format: json
-        body:
-          text: ":warning: {{ inventory_hostname }} required a reboot after Rocky updates."
-        status_code: 200
-      delegate_to: localhost
-      when:
-        - kernel_check.stdout == "kernel_updated"
-        - slack_webhook_url | length > 0
-
-    - name: Log when Slack webhook is not configured
-      debug:
-        msg: "Reboot required for {{ inventory_hostname }}, but SLACK_WEBHOOK_URL is not set. Skipping Slack notification."
-      when:
-        - kernel_check.stdout == "kernel_updated"
-        - slack_webhook_url | length == 0
-
     - name: Reboot if kernel was updated
       reboot:
         msg: "Rebooting due to kernel update"
